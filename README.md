@@ -26,8 +26,7 @@ The mirror used to actually download the file is the same as the one which was o
 
 Notes:
 
-* The proxy does **NOT** cache the database files.
-* If the mirror has a different repository structure than the above, the proxy will not cache the package file.
+* The proxy does **NOT** cache the database files or any other files not matching the above URL structure.
 
 ## Build
 
