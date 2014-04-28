@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net"
@@ -45,16 +46,21 @@ func NewCachedResponse(r *http.Request, store *PkgStore, pkg *PkgFile) *http.Res
 }
 
 func main() {
+	cwd, _ := os.Getwd()
+
 	verbose := flag.Bool("v", false, "should every proxy request be logged to stdout")
 	addr := flag.String("l", ":8080", "on which address should the proxy listen")
+	cacheDir := flag.String("p", cwd, "cache directory, by default the working directory")
 	flag.Parse()
 
 	proxy := goproxy.NewProxyHttpServer()
 	proxy.Verbose = *verbose
 
-	store, err := NewPkgStore("/tmp/packages")
+	store, err := NewPkgStore(*cacheDir)
 	if err != nil {
-		log.Fatal("Could not create package cache directory")
+		log.Fatal(fmt.Printf("Could not create package cache directory: %s", *cacheDir))
+	} else {
+		log.Printf("Using cache directory: %s", *cacheDir)
 	}
 
 	tr := transport.Transport{Proxy: transport.ProxyFromEnvironment}

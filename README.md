@@ -50,6 +50,7 @@ go build
 
 * `-v`: enables verbose output
 * `-l [address]:port`: listen address/port combination, address is optional (default to 0.0.0.0)
+* `-p dir`: cache directory path, by default current working directory
 
 ### Use the proxy
 
